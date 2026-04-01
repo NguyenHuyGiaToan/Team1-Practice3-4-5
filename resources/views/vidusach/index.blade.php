@@ -9,13 +9,13 @@
                 <img src="{{asset('hinh/image/'.$row->file_anh_bia)}}" width='200px' height='200px'><br>
                 <b>{{$row->tieu_de}}</b><br />
                 <i>{{number_format($row->gia_ban,0,",",".")}}đ</i>
-                <div class='btn-add-product'>
-                    <button class='btn btn-success btn-sm mb-1 add-product' book_id="{{$row->id}}">
-                        Thêm vào giỏ hàng
-                    </button>
-
-                </div>
             </a>
+            <div class='btn-add-product'>
+                <button class='btn btn-success btn-sm mb-1 add-product' book_id="{{$row->id}}">
+                    Thêm vào giỏ hàng
+                </button>
+
+            </div>
         </div>
 
 
@@ -23,7 +23,7 @@
     </div>
     <script>
         $(document).ready(function() {
-            $(".add-product").click(function() {
+            $(document).off('click', '.add-product').on('click', '.add-product', function() {
                 id = $(this).attr("book_id");
                 num = 1;
                 $.ajax({

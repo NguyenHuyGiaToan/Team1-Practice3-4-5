@@ -2,7 +2,13 @@
     <x-slot name='title'>
         Đặt hàng
     </x-slot>
-
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
     <div>
         <div style='color:#15c; font-weight:bold;font-size:15px;text-align:center'>DANH SÁCH SẢN PHẨM</div>
         

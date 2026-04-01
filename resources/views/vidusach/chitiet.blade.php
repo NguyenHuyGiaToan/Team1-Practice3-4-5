@@ -48,38 +48,11 @@
                         "num": num
                     },
                     beforeSend: function() {},
-
                     success: function(data) {
                         $("#cart-number-product").html(data);
                     },
-                    error: function(xhr, status, error) {
-
-                    },
-                    complete: function(xhr, status) {
-
-                    }
-                });
-            });
-            $(document).ready(function() {
-                $("#add-to-cart").click(function() {
-                    id = "{{$data->id}}";
-                    num = $("#product-number").val()
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        url: "{{route('cartadd')}}",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "id": id,
-                            "num": num
-                        },
-                        beforeSend: function() {},
-                        success: function(data) {
-                            $("#cart-number-product").html(data);
-                        },
-                        error: function(xhr, status, error) {},
-                        complete: function(xhr, status) {}
-                    });
+                    error: function(xhr, status, error) {},
+                    complete: function(xhr, status) {}
                 });
             });
         });
