@@ -49,16 +49,16 @@
                 <div class='col-9 p-0'>
                     <ul class="navbar-nav">
                         <li class="nav-item {{ request()->is('sach') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{url('sach')}}">Trang chủ</a>
+                            <a class="nav-link  menu-the-loai" href="#" the_loai="">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('sach/theloai/1')}}">Tiểu thuyết</a>
+                            <a class="nav-link  menu-the-loai"  href="#" the_loai="1">Tiểu thuyết</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('sach/theloai/2')}}">Truyện ngắn - tản văn</a>
+                            <a class="nav-link  menu-the-loai" href="#" the_loai="2">Truyện ngắn - tản văn</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('sach/theloai/3')}}">Tác phẩm kinh điển</a>
+                            <a class="nav-link  menu-the-loai" href="#" the_loai="3">Tác phẩm kinh điển</a>
                         </li>
                     </ul>
                 </div>
@@ -104,5 +104,33 @@
             </div>
         </div>
     </main>
+    <script>
+    $(document).ready(function(){
+        $(".menu-the-loai").click(function(e){
+            e.preventDefault(); // Ngăn chặn nhảy dấu # lên URL
+            
+            let id_theloai = $(this).attr("the_loai");
+            
+            // KIỂM TRA NGỮ CẢNH: 
+            // Nếu không ở trang chủ (ví dụ đang ở trang chi tiết), 
+            // thì phải chuyển hướng về trang chủ kèm tham số lọc.
+            if (window.location.pathname.includes('/chitiet/')) {
+                window.location.href = "{{ url('sach') }}?theloai=" + id_theloai;
+                return;
+            }
+
+            // Nếu đang ở trang chủ, thực hiện Ajax để lọc sách
+            $.ajax({
+                type: "GET",
+                url: "{{ url('sach/filter') }}", // Bạn cần tạo Route này trong web.php
+                data: { id: id_theloai },
+                success: function(response){
+                    // Giả sử vùng hiển thị sách của bạn có class là .list-book
+                    $(".list-book").html(response);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

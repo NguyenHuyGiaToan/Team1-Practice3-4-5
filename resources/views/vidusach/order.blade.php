@@ -66,8 +66,6 @@
                         Vui lòng đăng nhập trước khi đặt hàng
                     @endauth
                 </div>
-            
-       
     </div>
 
 </x-book-layout>

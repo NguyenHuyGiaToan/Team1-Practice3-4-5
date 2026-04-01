@@ -33,6 +33,7 @@
         {{$data->mo_ta}}
     </div>
 </div>
+
 <script>
     $(document).ready(function(){
         $("#add-to-cart").click(function(){
@@ -55,5 +56,39 @@
             });
         });
     });
+
+    $(document).ready(function() {
+            $(".menu-the-loai").click(function() {
+                
+                
+                // Lấy giá trị thuộc tính the_loai từ item menu được click
+                the_loai = $(this).attr("the_loai");
+                
+                $.ajax({
+                    type: "POST",
+                    dataType: "html",
+                    url: "{{route('bookview')}}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "the_loai": the_loai
+                    },
+                    beforeSend: function() {
+                        
+                    },
+                    success: function(data) {
+                        // Cập nhật nội dung HTML nhận được vào vùng hiển thị
+                        $("#book-view-div").html(data);
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        
+                    },
+                    complete: function(xhr, status) {
+                        
+                    }
+                });
+            });
+        });
 </script>
+
 </x-book-layout>
