@@ -1,9 +1,25 @@
-<x-book-layout>
-    <x-slot name='title'>
-        Sách theo thể loại
-    </x-slot>
+<x-book-layout>  
+<x-slot name='title'>
+    Sách
+</x-slot>
 
-    <div id='book-view-div'>
+<style>
+    .book
+    {
+        position:relative;
+        margin:10px;
+        text-align:center;
+        padding-bottom:35px;
+    }
+    .btn-add-product
+    {
+        position:absolute;
+        bottom:0;
+        width:100%;
+    }
+</style>
+
+<div id='book-view-div'>
         <div class='list-book'>
             @foreach($data as $row)
                 <div class='book' style="display: inline-block; margin: 10px; vertical-align: top; width: 200px;">
@@ -21,9 +37,34 @@
                 </div>
             @endforeach
         </div>
-    </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <script type="text/javascript">
+<script>
+        $(document).ready(function(){
+            $(".add-product").click(function(){
+                id = $(this).attr("book_id");
+                num = 1;
+                $.ajax({
+                    type:"POST",
+                    dataType:"json",
+                    url: "{{route('cartadd')}}",
+                    data:{"_token": "{{ csrf_token() }}","id":id,"num":num},
+                    beforeSend:function(){
+
+                    },
+                    success:function(data){
+                        $("#cart-number-product").html(data);
+                    },
+                    error: function (xhr,status,error){
+
+                    },
+                    complete: function(xhr,status){
+
+                    }
+                });
+            });
+        });
+        
         $(document).ready(function() {
             $(".menu-the-loai").click(function() {
                 
@@ -56,5 +97,5 @@
                 });
             });
         });
-    </script>
+</script>
 </x-book-layout>
