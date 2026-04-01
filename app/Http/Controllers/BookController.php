@@ -34,30 +34,44 @@ class BookController extends Controller
         return view("vidusach.chitiet", compact("data"));
     }
 
+    public function bookview(Request $request)
+    {
+        $the_loai = $request->input("the_loai");
+        $data = [];
+        if($the_loai!="")
+            $data = DB::select("select * from sach where the_loai = ?",[$the_loai]);
+        else
+            $data = DB::select("select * from sach order by gia_ban asc limit 0,10");
+        return view("vidusach.bookview", compact("data"));
+    }
+
 
     public function cartadd(Request $request)
     {
         $request->validate([
-            "id" => ["required", "numeric"],
-            "num" => ["required", "numeric"]
+            "id"=>["required","numeric"],
+            "num"=>["required","numeric"]
         ]);
         $id = $request->id;
         $num = $request->num;
         $total = 0;
         $cart = [];
-        if (session()->has('cart')) {
+        if(session()->has('cart'))
+        {
             $cart = session()->get("cart");
-            if (isset($cart[$id]))
+            if(isset($cart[$id]))
                 $cart[$id] += $num;
             else
-                $cart[$id] = $num;
-        } else {
-            $cart[$id] = $num;
+                $cart[$id] = $num ;
         }
-        session()->put("cart", $cart);
+        else
+        {
+            $cart[$id] = $num ;
+        }
+        session()->put("cart",$cart);
         return count($cart);
     }
-
+    
     public function order()
     {
         $cart = [];
@@ -70,11 +84,12 @@ class BookController extends Controller
                 $quantity[$id] = $value;
                 $list_book .= $id . ", ";
             }
-            if (!empty($list_book)) {
-                $list_book = substr($list_book, 0, strlen($list_book) - 2);
-                $data = [];
-                $data = DB::table("sach")->whereRaw("id in (" . $list_book . ")")->get();
-            }
+            if(!empty($list_book))
+                {
+                    $list_book = substr($list_book, 0, strlen($list_book) - 2);
+                    $data = [];
+                    $data = DB::table("sach")->whereRaw("id in (" . $list_book . ")")->get();
+                }
         }
 
         return view("vidusach.order", compact("quantity", "data"));
@@ -83,17 +98,18 @@ class BookController extends Controller
     public function cartdelete(Request $request)
     {
         $request->validate([
-            "id" => ["required", "numeric"]
+            "id"=>["required","numeric"]
         ]);
-        $id = $request->id;
-        $total = 0;
-        $cart = [];
-        if (session()->has('cart')) {
-            $cart = session()->get("cart");
-            unset($cart[$id]);
-        }
-        session()->put("cart", $cart);
-        return redirect()->route('order');
+    $id = $request->id;
+    $total = 0;
+    $cart = [];
+    if(session()->has('cart'))
+    {
+        $cart = session()->get("cart");
+        unset($cart[$id]);
+    }
+    session()->put("cart",$cart);
+    return redirect()->route('order');
     }
 
     public function ordercreate(Request $request)
@@ -243,3 +259,5 @@ class BookController extends Controller
         $user->notify(new OrderDetailSend($donHang));
     }
 }
+}
+?>

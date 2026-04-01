@@ -47,12 +47,10 @@
     {
         margin:0 auto;
         width:1000px;
+        margin-left: 16.666667%;
         
     }
-        margin-left: 16.666667%;
-     
-
-    }
+  
 
     .navbar-nav a
     {
@@ -79,14 +77,12 @@
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              //<a class="nav-link active" href="{{route('account')}}">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active" href="{{route('account')}}">
                 Thông tin tài khoản
               </a>
             </li>
             <li class="nav-item">
-              //<a class="nav-link" href="{{route('booklist')}}">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{route('booklist')}}">
                 Quản lý sách
               </a>
             </li>

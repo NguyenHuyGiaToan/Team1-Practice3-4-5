@@ -7,6 +7,10 @@ Route::get('/sach','App\Http\Controllers\BookController@sach');
 Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
 Route::get('/sach/chitiet/{id}',"App\Http\Controllers\BookController@chitiet");
 
+//yêu cầu 4.
+Route::post('/bookview','App\Http\Controllers\BookController@bookview')->name("bookview");
+
+
 Route::get('/','App\Http\Controllers\BookController@sach');
 
 
@@ -26,6 +30,10 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+Route::get('/order','App\Http\Controllers\BookController@order')->name('order');
+Route::post('/cart/add','App\Http\Controllers\BookController@cartadd')->name('cartadd');
+Route::post('/cart/delete','App\Http\Controllers\BookController@cartdelete')->name('cartdelete');
+Route::post('/order/create','App\Http\Controllers\BookController@ordercreate')->middleware('auth')->name('ordercreate');
 
 Route::get('/order','App\Http\Controllers\BookController@order')->name('order');
 Route::post('/cart/add','App\Http\Controllers\BookController@cartadd')->name('cartadd');

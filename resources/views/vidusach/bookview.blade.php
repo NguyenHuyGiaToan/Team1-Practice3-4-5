@@ -1,46 +1,21 @@
-<x-book-layout>  
-<x-slot name='title'>
-    Sách
-</x-slot>
-
-<style>
-    .book
-    {
-        position:relative;
-        margin:10px;
-        text-align:center;
-        padding-bottom:35px;
-    }
-    .btn-add-product
-    {
-        position:absolute;
-        bottom:0;
-        width:100%;
-    }
-</style>
-
-<div id='book-view-div'>
-        <div class='list-book'>
-            @foreach($data as $row)
-                <div class='book' style="display: inline-block; margin: 10px; vertical-align: top; width: 200px;">
-                    <a href="{{url('sach/chitiet/'.$row->id)}}">
-                        <img src="{{asset('hinh/image/'.$row->file_anh_bia)}}" width='200px' height='200px'>
-                        <br>
-                        <b>{{$row->tieu_de}}</b><br/>
-                        <i>{{number_format($row->gia_ban,0,",",".")}}đ</i><br>
-                    </a> 
-                    <div class='btn-add-product'>
-                        <button class='btn btn-success btn-sm mb-1 add-product' book_id="{{$row->id}}">
-                            Thêm vào giỏ hàng
-                        </button> 
-                    </div>
-                </div>
-            @endforeach
+<div class='list-book'>
+    @foreach($data as $row)
+        <div class='book'>
+            <a href="{{url('sach/chitiet/'.$row->id)}}">
+                <img src="{{asset('hinh/image/'.$row->file_anh_bia)}}" width='200px' height='200px'><br>
+                <b>{{$row->tieu_de}}</b><br/>
+                <i>{{number_format($row->gia_ban,0,",",".")}}đ</i><br>
+            </a> 
+            <div class='btn-add-product'>
+                <button class='btn btn-success btn-sm mb-1 add-product' book_id="{{$row->id}}">
+                    Thêm vào giỏ hàng
+                </button> 
+            </div>
         </div>
-</div>
-
-<script>
-        $(document).ready(function(){
+    @endforeach
+ </div>
+ <script>
+    $(document).ready(function(){
             $(".add-product").click(function(){
                 id = $(this).attr("book_id");
                 num = 1;
@@ -64,8 +39,8 @@
                 });
             });
         });
-        
-        $(document).ready(function() {
+    
+    $(document).ready(function() {
             $(".menu-the-loai").click(function() {
                 
                 
@@ -98,4 +73,3 @@
             });
         });
 </script>
-</x-book-layout>
