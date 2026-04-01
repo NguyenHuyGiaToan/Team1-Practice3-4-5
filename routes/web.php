@@ -35,6 +35,13 @@ Route::post('/cart/add','App\Http\Controllers\BookController@cartadd')->name('ca
 Route::post('/cart/delete','App\Http\Controllers\BookController@cartdelete')->name('cartdelete');
 Route::post('/order/create','App\Http\Controllers\BookController@ordercreate')->middleware('auth')->name('ordercreate');
 
+Route::get('/order','App\Http\Controllers\BookController@order')->name('order');
+Route::post('/cart/add','App\Http\Controllers\BookController@cartadd')->name('cartadd');
+Route::post('/cart/delete','App\Http\Controllers\BookController@cartdelete')->name('cartdelete');
+Route::post('/order/create','App\Http\Controllers\BookController@ordercreate')
+->middleware('auth')->name('ordercreate');
+
+
 Route::get('/book/list', 'App\Http\Controllers\BookController@booklist')->middleware('auth')->name("booklist");
 
 Route::get('/book/create', 'App\Http\Controllers\BookController@bookcreate')->middleware('auth')->name("bookcreate");
@@ -44,3 +51,4 @@ Route::post('/book/delete', 'App\Http\Controllers\BookController@bookdelete')->m
 
 Route::get('/accountpanel','App\Http\Controllers\AccountController@accountpanel')->middleware('auth')->name("account");
 Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')->middleware('auth')->name('saveinfo');
+
