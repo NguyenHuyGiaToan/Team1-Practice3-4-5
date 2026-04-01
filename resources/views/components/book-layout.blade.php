@@ -54,6 +54,21 @@
                                 </li>
                             </ul>
                     </div>
+                    
+                    <div style='color:white;position:relative' class='mr-2'>
+                      <div style='width:20px; height:20px;background-color:#23b85c; font-size:12px; border:none;
+                      border-radius:50%; position:absolute;right:2px;top:-2px' id='cart-number-product'>
+                        @if (session('cart'))
+                          {{ count(session('cart')) }}
+                        @else
+                          0
+                        @endif
+                      </div>
+                      <a href="{{route('order')}}" style='cursor:pointer;color:white;'>
+                        <i class="fa fa-cart-arrow-down fa-2x mr-2 mt-2" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                    
                     <div class='col-3 p-0 d-flex justify-content-end'>
                         @auth
                             <div class="dropdown">
