@@ -9,15 +9,7 @@
             padding: 5px;
         }
     </style>
-    <div>
-        <div style='color:#15c; font-weight:bold;font-size:15px;text-align:center'>DANH SÁCH SẢN PHẨM</div>
-        @if(session('success'))
-            <div style='margin:10px auto; width:70%; padding:10px; background:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:4px; text-align:center;'>
-                {{ session('success') }}
-            </div>
-        @endif
-
-    <div>
+    
         <div style='color:#15c; font-weight:bold;font-size:15px;text-align:center'>DANH SÁCH SẢN PHẨM</div>
         
             <table class='book-table' style='margin:0 auto; width:70%'>

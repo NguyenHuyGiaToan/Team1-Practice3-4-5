@@ -259,5 +259,4 @@ class BookController extends Controller
         $user->notify(new OrderDetailSend($donHang));
     }
 }
-}
 ?>

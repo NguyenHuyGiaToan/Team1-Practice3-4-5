@@ -101,13 +101,6 @@
             <div class='col-12'>
                 {{$slot}}
             </div>
-        </nav>
-    </header>
-    <main style="width:1000px; margin:2px auto;">
-        <div class='row'>
-            <div class='col-12'>
-               {{$slot}}
-            </div>
         </div>
     </main>
     <script>
