@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Notifications\OrderDetailSend;
 
 class BookController extends Controller
 {
@@ -36,29 +38,26 @@ class BookController extends Controller
     public function cartadd(Request $request)
     {
         $request->validate([
-            "id"=>["required","numeric"],
-            "num"=>["required","numeric"]
+            "id" => ["required", "numeric"],
+            "num" => ["required", "numeric"]
         ]);
         $id = $request->id;
         $num = $request->num;
         $total = 0;
         $cart = [];
-        if(session()->has('cart'))
-        {
+        if (session()->has('cart')) {
             $cart = session()->get("cart");
-            if(isset($cart[$id]))
+            if (isset($cart[$id]))
                 $cart[$id] += $num;
             else
-                $cart[$id] = $num ;
+                $cart[$id] = $num;
+        } else {
+            $cart[$id] = $num;
         }
-        else
-        {
-            $cart[$id] = $num ;
-        }
-        session()->put("cart",$cart);
+        session()->put("cart", $cart);
         return count($cart);
     }
-    
+
     public function order()
     {
         $cart = [];
@@ -71,12 +70,11 @@ class BookController extends Controller
                 $quantity[$id] = $value;
                 $list_book .= $id . ", ";
             }
-            if(!empty($list_book))
-                {
-                    $list_book = substr($list_book, 0, strlen($list_book) - 2);
-                    $data = [];
-                    $data = DB::table("sach")->whereRaw("id in (" . $list_book . ")")->get();
-                }
+            if (!empty($list_book)) {
+                $list_book = substr($list_book, 0, strlen($list_book) - 2);
+                $data = [];
+                $data = DB::table("sach")->whereRaw("id in (" . $list_book . ")")->get();
+            }
         }
 
         return view("vidusach.order", compact("quantity", "data"));
@@ -85,55 +83,82 @@ class BookController extends Controller
     public function cartdelete(Request $request)
     {
         $request->validate([
-            "id"=>["required","numeric"]
+            "id" => ["required", "numeric"]
         ]);
-    $id = $request->id;
-    $total = 0;
-    $cart = [];
-    if(session()->has('cart'))
-    {
-        $cart = session()->get("cart");
-        unset($cart[$id]);
-    }
-    session()->put("cart",$cart);
-    return redirect()->route('order');
+        $id = $request->id;
+        $total = 0;
+        $cart = [];
+        if (session()->has('cart')) {
+            $cart = session()->get("cart");
+            unset($cart[$id]);
+        }
+        session()->put("cart", $cart);
+        return redirect()->route('order');
     }
 
     public function ordercreate(Request $request)
     {
         $request->validate([
-        "hinh_thuc_thanh_toan"=>["required","numeric"]
+            "hinh_thuc_thanh_toan" => ["required", "numeric"]
         ]);
+        $paymentLabels = [
+            1 => 'Tiền mặt',
+            2 => 'Chuyển khoản',
+            3 => 'Thanh toán VNPay'
+        ];
+        $paymentMethod = $paymentLabels[$request->hinh_thuc_thanh_toan] ?? 'Khác';
         $data = [];
         $quantity = [];
-        if(session()->has('cart'))
-        {
-        $order = ["ngay_dat_hang"=>DB::raw("now()"),"tinh_trang"=>1,
-        "hinh_thuc_thanh_toan"=>$request->hinh_thuc_thanh_toan,
-        "user_id"=>Auth::user()->id];
-        DB::transaction(function () use ($order) {
-        $id_don_hang = DB::table("don_hang")->insertGetId($order);
-        $cart = session("cart");
-        $list_book = "";
-        $quantity = [];
-        foreach($cart as $id=>$value)
-        {
-        $quantity[$id] = $value;
-        $list_book .=$id.", ";
+        $emailData = [];
+        if (session()->has('cart')) {
+            $order = [
+                "ngay_dat_hang" => DB::raw("now()"),
+                "tinh_trang" => 1,
+                "hinh_thuc_thanh_toan" => $request->hinh_thuc_thanh_toan,
+                "user_id" => Auth::user()->id
+            ];
+            DB::transaction(function () use ($order, &$data, &$quantity, &$emailData) {
+                $id_don_hang = DB::table("don_hang")->insertGetId($order);
+                $cart = session("cart");
+                $list_book = "";
+                foreach ($cart as $id => $value) {
+                    $quantity[$id] = $value;
+                    $list_book .= $id . ", ";
+                }
+                $list_book = substr($list_book, 0, strlen($list_book) - 2);
+                $data = DB::table("sach")->whereRaw("id in (" . $list_book . ")")->get();
+                $detail = [];
+                foreach ($data as $row) {
+                    $detail[] = [
+                        "ma_don_hang" => $id_don_hang,
+                        "sach_id" => $row->id,
+                        "so_luong" => $quantity[$row->id],
+                        "don_gia" => $row->gia_ban
+                    ];
+                }
+                DB::table("chi_tiet_don_hang")->insert($detail);
+                foreach ($data as $row) {
+                    $row->so_luong = $quantity[$row->id];
+                    $emailData[] = $row;
+                }
+                session()->forget('cart');
+            });
+
+            if (!empty($emailData)) {
+                $user = User::find(Auth::id());
+                if ($user) {
+                    $user->notify(new OrderDetailSend([
+                        'items' => $emailData,
+                        'customerName' => $user->name,
+                        'paymentMethod' => $paymentMethod,
+                    ]));
+                }
+            }
+            return redirect()->route('order')
+                ->with('success', 'Đơn đặt hàng của bạn thành công, vui lòng kiểm tra Email');
         }
-        $list_book = substr($list_book, 0,strlen($list_book)-2);
-        $data = DB::table("sach")->whereRaw("id in (".$list_book.")")->get();
-        $detail = [];
-        foreach($data as $row)
-        {
-        $detail[] = ["ma_don_hang"=>$id_don_hang,"sach_id"=>$row->id,
-        "so_luong"=>$quantity[$row->id],"don_gia"=>$row->gia_ban];
-        }
-        DB::table("chi_tiet_don_hang")->insert($detail);
-        session()->forget('cart');
-        });
-        }
-        return view("vidusach.order", compact('data','quantity'));
+
+        return redirect()->route('order');
     }
 
 
@@ -208,5 +233,13 @@ class BookController extends Controller
         DB::table("sach")->where("id", $id)->delete();
         return redirect()->route('booklist')->with('status', "Xóa thành công");
     }
-}
 
+    function testemail()
+    {
+        $user = User::find(Auth::user()->id);
+        $donHang = DB::select("select * from chi_tiet_don_hang c, sach s
+                where c.sach_id = s.id
+                and c.ma_don_hang = (select max(id) from don_hang where user_id = ?)", [Auth::user()->id]);
+        $user->notify(new OrderDetailSend($donHang));
+    }
+}
