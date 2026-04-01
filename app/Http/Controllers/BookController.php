@@ -134,8 +134,6 @@ class BookController extends Controller
         return view("vidusach.order", compact('data','quantity'));
     }
 
-}
-
     // Quản lý sách - danh sách
     public function booklist()
     {
@@ -207,3 +205,4 @@ class BookController extends Controller
         return redirect()->route('booklist')->with('status', "Xóa thành công");
     }
 }
+?>
