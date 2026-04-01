@@ -7,9 +7,13 @@ Route::get('/sach','App\Http\Controllers\BookController@sach');
 Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
 Route::get('/sach/chitiet/{id}',"App\Http\Controllers\BookController@chitiet");
 
-Route::get('/', function () {
+Route::get('/','App\Http\Controllers\BookController@sach');
+
+
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -22,3 +26,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/accountpanel','App\Http\Controllers\AccountController@accountpanel')->middleware('auth')->name("account");
+
+
+Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')->middleware('auth')->name('saveinfo');
