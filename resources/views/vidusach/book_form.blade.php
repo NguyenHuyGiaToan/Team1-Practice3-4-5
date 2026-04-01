@@ -56,7 +56,7 @@
                     <img src="{{ asset('storage/book_image/'.$sach->file_anh_bia) }}" width="50px" class='mb-1'/>
                     <input type='hidden' value='{{ $sach->id }}' name='id'>
                 @endif
-                <input type="file" name="file_anh_bia" accept="image/*" class="form-control-file">
+                <input type="file" name="file_anh_bia" accept="hinh/image/*" class="form-control-file">
 
                 {{ csrf_field() }}
 

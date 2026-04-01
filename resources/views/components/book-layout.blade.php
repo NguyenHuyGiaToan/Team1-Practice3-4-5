@@ -87,12 +87,5 @@
                 </div>
             </div>
         </main>
-        <!--<footer>
-            <div class='row' style='text-align:center'>
-                <div class='col-4'>TRỤ SỞ</div>
-                <div class='col-4'>THÔNG TIN CHUNG</div>
-                <div class='col-4'>BẢN ĐỒ</div>
-            </div>
-        </footer>-->
     </body>
 </html>
