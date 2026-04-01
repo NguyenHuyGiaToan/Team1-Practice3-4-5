@@ -6,27 +6,14 @@
   <title>Trang quản trị tài khoản</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    
-  <script src="https://code.jquery.com/jquery-3.7.1.js" ></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-  <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   
-  <!-- Scripts -->
-
   <style>
     .sidebar {
       position: fixed;
       top: 0;
       bottom: 0;
       left: 0;
-      z-index: 100; 
-      padding: 20px 0 0; /* Height of navbar */
+      z-index: 100;
+      padding: 48px 0 0; 
       box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
       background-color:#404e68!important
       
@@ -49,19 +36,13 @@
         width:1000px;
         
     }
-        margin-left: 16.666667%;
-     
-
-    }
-
     .navbar-nav a
     {
         color:black!important;
     }
     .content {
-      margin-left: 240px; /* Width of sidebar */
+      margin-left: 240px; 
     }
-
   </style>
 </head>
 <body>
@@ -79,13 +60,11 @@
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              //<a class="nav-link active" href="{{route('account')}}">
               <a class="nav-link active" href="#">
                 Thông tin tài khoản
               </a>
             </li>
             <li class="nav-item">
-              //<a class="nav-link" href="{{route('booklist')}}">
               <a class="nav-link" href="#">
                 Quản lý sách
               </a>
@@ -101,8 +80,6 @@
     </div>
   </div>
 
-
- 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
