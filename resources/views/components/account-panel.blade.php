@@ -14,7 +14,7 @@
       bottom: 0;
       left: 0;
       z-index: 100;
-      padding: 48px 0 0; /* Height of navbar */
+      padding: 20px 0 0; /* Height of navbar */
       box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
       background-color:#404e68!important
       
@@ -28,22 +28,16 @@
         font-weight:bold;
         margin:0 auto;
         margin-bottom: 20px;
+        margin-left: 16.666667%;
      
 
     }
-    .navbar-nav
-    {
-        margin:0 auto;
-        width:1000px;
-        
-    }
+
     .navbar-nav a
     {
         color:black!important;
     }
-    .content {
-      margin-left: 240px; /* Width of sidebar */
-    }
+
   </style>
 </head>
 <body>
