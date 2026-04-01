@@ -7,6 +7,10 @@ Route::get('/sach','App\Http\Controllers\BookController@sach');
 Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
 Route::get('/sach/chitiet/{id}',"App\Http\Controllers\BookController@chitiet");
 
+//yêu cầu 4.
+Route::post('/bookview','App\Http\Controllers\BookController@bookview')->name("bookview");
+
+
 Route::get('/', function () {
     return view('welcome');
 });

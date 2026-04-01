@@ -35,16 +35,16 @@
           <nav class="navbar navbar-light">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                <a class="nav-link" href="{{url('sach')}}">Trang chủ</a>
+                <a class="nav-link menu-the-loai" href="#" the_loai="">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{url('sach/theloai/1')}}">Tiểu thuyết</a>
+                <a class="nav-link menu-the-loai" href="#" the_loai="1">Tiểu thuyết</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{url('sach/theloai/2')}}">Truyện ngắn - tản văn</a>
+                <a class="nav-link menu-the-loai" href="#" the_loai="2">Truyện ngắn - tản văn</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{url('sach/theloai/3')}}">Tác phẩm kinh điển</a>
+                <a class="nav-link menu-the-loai" href="#" the_loai="3">Tác phẩm kinh điển</a>
                 </li>
             </ul>
           </nav>
