@@ -36,7 +36,7 @@ responsive: true,
                 <td>{{$row->tac_gia}}</td>
                 <td>{{$row->hinh_thuc_bia}}</td>
                 <td>{{$row->gia_ban}}</td>
-                <td><img src="{{asset('hinh/image/'.$row->file_anh_bia)}}" width="50px"></td>
+                <td><img src="{{asset('storage/book_image/'.$row->file_anh_bia)}}" width="50px"></td>
                 <td>
                     <div class="btn-group">
                         <a href="{{route('bookedit',['id'=>$row->id])}}" class='btn btn-sm btn-primary'>Sửa</a>
